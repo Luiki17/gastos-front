@@ -1,0 +1,24 @@
+<form [formGroup]="form" class="row g-3 mb-4">
+
+  <div class="col-md-4">
+    <label class="form-label">Año</label>
+    <input type="number" class="form-control" formControlName="year">
+  </div>
+
+  <div class="col-md-4">
+    <label class="form-label">Mes</label>
+    <select class="form-select" formControlName="month">
+      <option *ngFor="let m of months" [value]="m.value">
+        {{ m.name }}
+      </option>
+    </select>
+  </div>
+
+  <div class="col-md-4 d-flex align-items-end">
+    <button type="button" class="btn btn-primary w-100"
+            (click)="applyFilter()">
+      Filtrar
+    </button>
+  </div>
+
+</form>

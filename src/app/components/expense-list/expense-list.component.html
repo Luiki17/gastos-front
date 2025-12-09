@@ -1,0 +1,63 @@
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Gastos</h2>
+    <a routerLink="/expenses/new" class="btn btn-primary">Nuevo gasto</a>
+  </div>
+
+  <!-- Filtro por año/mes -->
+  <form [formGroup]="filterForm" class="row g-3 mb-4">
+    <div class="col-md-4">
+      <label class="form-label">Año</label>
+      <input type="number" class="form-control" formControlName="year">
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">Mes</label>
+      <select class="form-select" formControlName="month">
+        <option *ngFor="let m of months" [value]="m.value">
+          {{ m.name }}
+        </option>
+      </select>
+    </div>
+    <div class="col-md-4 d-flex align-items-end">
+      <button type="button" class="btn btn-primary w-100" (click)="applyFilter()">
+        Filtrar
+      </button>
+    </div>
+  </form>
+
+  <!-- Gráfica de gastos -->
+<app-expense-chart [expenses]="expenses"></app-expense-chart>
+
+
+  <!-- Total mensual -->
+  <div class="mb-3">
+    <h5>Total: {{ total | currency:'EUR' }}</h5>
+  </div>
+
+  <!-- Tabla de gastos -->
+  <table class="table table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>€</th>
+        <th>Concepto</th>
+        <th>Fecha</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let expense of expenses">
+        <td>{{ expense.amount | currency:'EUR' }}</td>
+        <td>{{ expense.description }}</td>
+        <td>{{ expense.expenseDate }}</td>
+        <td>
+          <button class="btn btn-danger btn-sm" (click)="deleteExpense(expense.id!)">
+            Eliminar
+          </button>
+        </td>
+      </tr>
+      <tr *ngIf="expenses.length === 0">
+        <td colspan="4" class="text-center">No hay gastos para mostrar</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

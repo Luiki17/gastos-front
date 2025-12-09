@@ -1,0 +1,31 @@
+<div class="container mt-4">
+  <h2>{{ isEditMode ? 'Editar gasto' : 'Nuevo gasto' }}</h2>
+
+  <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
+
+    <div class="mb-3">
+      <label class="form-label">Cantidad (€)</label>
+      <input type="number" class="form-control" formControlName="amount">
+      <small class="text-danger" *ngIf="expenseForm.get('amount')?.invalid && expenseForm.touched">
+        Cantidad obligatoria y mayor que 0
+      </small>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Concepto</label>
+      <input type="text" class="form-control" formControlName="description">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Fecha</label>
+      <input type="date" class="form-control" formControlName="expenseDate">
+    </div>
+
+    <button class="btn btn-success me-2" type="submit" [disabled]="expenseForm.invalid">
+      Guardar
+    </button>
+
+    <a routerLink="/expenses" class="btn btn-secondary">Cancelar</a>
+
+  </form>
+</div>
